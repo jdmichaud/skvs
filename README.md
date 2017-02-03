@@ -1,10 +1,10 @@
 # A simple key/value store based on node
 
-`kvs` is a simple key/value store system which is simple to operate. Coded in
+`skvs` is a simple key/value store system which is simple to operate. Coded in
 javascript and based on [express](http://expressjs.com/). It exposes a standard
 REST api to store schema-less JSON data.
 
-`kvs` can either store in volatile memory or on the filesystem for permanent storage.
+`skvs` can either store in volatile memory or on the filesystem for permanent storage.
 
 ## Sample usage:
 
@@ -17,7 +17,6 @@ REST api to store schema-less JSON data.
 {"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3}
 ~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldemann", "title": "The Forever War" }' localhost:12000/api/book/ -H 'Content-type: application/json'
 {"author":"Joe Haldemann","title":"The Forever War","id":4}
-on'
 ~ curl -sL -w'\n' localhost:12000/api/book/ -H 'Content-type: application/json'
 [{"author":"Michael Crichton","title":"The Andromeda Strain","id":1},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3},{"author":"Joe Haldeman","title":"The Forever War","id":4}]
 ~ curl -sGL -w'\n' localhost:12000/api/book/ --data-urlencode "author=Arthur C. Clarke"
@@ -30,35 +29,35 @@ on'
 
 To install globally, using npm:
 ```
-npm install -g kvs
+npm install -g skvs
 ```
 
 # Usage
 
 To launch with all the default value:
 ```
-~ kvs
+~ skvs
 server listening on port 127.0.0.1:12000 using memory store
 ```
-By default, `kvs` will only accept local connections and will use the memory as storage.
+By default, `skvs` will only accept local connections and will use the memory as storage.
 
 To launch on a specific host and port
 ```
-~ kvs --host 0.0.0.0 --port 12345
+~ skvs --host 0.0.0.0 --port 12345
 server listening on port 0.0.0.0:12000 using memory store
 ```
 
 To launch with the filesystem for storage
 ```
-~ kvs --host 0.0.0.0 --port 12345 --storage=/tmp/data
+~ skvs --host 0.0.0.0 --port 12345 --storage=/tmp/data
 server listening on port 0.0.0.0:12000 using filesystem store on /tmp/data
 ```
 
 # Development
 
-To participate in `kvs` development, clone the repository:
+To participate in `skvs` development, clone the repository:
 ```
-git clone https://github.com/jdmichaud/kvs
+git clone https://github.com/jdmichaud/skvs
 ```
 
 And submit a pull request.
