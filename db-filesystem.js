@@ -52,7 +52,6 @@ function Db(rootPath) {
   }
   return {
     filter: function (resource, query) {
-      console.log(resource, query);
       function filterall() {
         const filepath = path.join(rootPath, resource);
         const filenames = fs.readdirSync(filepath)

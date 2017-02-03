@@ -1,6 +1,7 @@
 const constants = require('./constants');
 const RestConstructor = require('./rest-driver');
-const DbConstructor = require('./db-filesystem');
+const FilesystemDbConstructor = require('./db-filesystem');
+const MemoryDbConstructor = require('./db-filesystem');
 const Server = require('./server');
 const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');
@@ -8,14 +9,12 @@ const getUsage = require('command-line-usage');
 const optionDefinitions = [
   { name: 'host', alias: 'n', type: String, defaultValue: '127.0.0.1' },
   { name: 'port', alias: 'p', type: Number, defaultValue: constants.DEFAULT_PORT },
+  { name: 'storage', alias: 's', type: String },
   { name: 'help', alias: 'h' },
 ];
 
 const options = commandLineArgs(optionDefinitions);
-const db = DbConstructor(constants.DATA_FOLDER);
-const rest = RestConstructor(db);
-
-if (options.host === null || options.port < 0 || options.port > 65535) {
+if (options.host === null || options.port < 0 || options.port > 65535 || options.storage === null) {
   console.log('Command line error. See usage below.');
   console.log(getUsage([{
     header: 'usage',
@@ -23,7 +22,6 @@ if (options.host === null || options.port < 0 || options.port > 65535) {
   }]));
   process.exit(1);
 }
-
 if (options.hasOwnProperty('help')) {
   console.log(getUsage([{
     header: 'usage',
@@ -32,5 +30,9 @@ if (options.hasOwnProperty('help')) {
   process.exit(0);
 }
 
+const db = options.storage ?
+  FilesystemDbConstructor(options.storage) : MemoryDbConstructor();
+const rest = RestConstructor(db);
+
 const server = Server(db, rest);
-server.listen(options.host, options.port);
+server.listen(options);

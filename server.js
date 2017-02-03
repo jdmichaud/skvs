@@ -73,9 +73,17 @@ const Server = function Server(db, rest) {
     res.status(500).send({ error: 'Server Error' });
   });
   return {
-    listen: function listen(host, port) {
-      app.listen(port, host, () =>
-      console.log(`server listening on port ${host}:${port}`));
+    listen: function listen(options) {
+      app.listen(options.port, options.host, () => {
+        let prompt = 'server listening on';
+        prompt += ` ${options.host}:${options.port}`;
+        if (options.storage) {
+          prompt += ` using filesystem store on ${options.storage}`;
+        } else {
+          prompt += ' using memory store';
+        }
+        console.log(prompt);
+      });
     },
   };
 };
