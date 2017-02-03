@@ -1,13 +1,13 @@
 {
-  "name": "domos-server",
-  "version": "1.0.0",
-  "description": "Data and web server for domos",
+  "name": "skvs",
+  "version": "0.1.0",
+  "description": "Simple Key Value Store",
   "main": "index.js",
   "scripts": {
     "test": "jasmine tests/*"
   },
   "author": "Jean-Daniel Michaud",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.16.0",
     "command-line-args": "^4.0.1",
