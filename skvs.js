@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const constants = require('./constants');
 const RestConstructor = require('./rest-driver');
 const FilesystemDbConstructor = require('./db-filesystem');

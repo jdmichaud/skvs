@@ -2,9 +2,17 @@
   "name": "skvs",
   "version": "0.1.0",
   "description": "Simple Key Value Store",
-  "main": "index.js",
+  "main": "skvs.js",
+  "bin": {
+    "skvs": "./skvs.js"
+  },
   "scripts": {
+    "start": "./skvs.js",
     "test": "jasmine tests/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdmichaud/skvs.git"
   },
   "author": "Jean-Daniel Michaud",
   "license": "MIT",
