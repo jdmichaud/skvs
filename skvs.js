@@ -1,8 +1,9 @@
 #!/usr/bin/env node
+const lodash = require('lodash');
 const constants = require('./constants');
 const RestConstructor = require('./rest-driver');
 const FilesystemDbConstructor = require('./db-filesystem');
-const MemoryDbConstructor = require('./db-filesystem');
+const MemoryDbConstructor = require('./db-memory');
 const Server = require('./server');
 const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');

@@ -11,7 +11,7 @@ function Db() {
       return _db[resource].filter(item =>
         Object.keys(query).reduce((accumulator, property) =>
           accumulator &&
-          item.hasOwnProperty(property) &&
+          lodash.has(item, property) &&
           lodash.isEqual(query[property], item[property]),
           true)
       );
