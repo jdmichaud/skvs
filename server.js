@@ -3,9 +3,9 @@ const bodyParser = require('body-parser');
 const lodash = require('lodash');
 const constants = require('./constants');
 
-const Server = function Server(db, rest) {
+const Server = function Server(db, rest, prefix) {
   const watcher = {};
-  const urlRegex = RegExp(`/+${constants.REST_URL_PREFIX}/([^/?]+).*`);
+  const urlRegex = RegExp(`/+${prefix}/([^/?]+).*`);
 
   // Used to callback the client which requested a long polling
   // on the affected resource.
@@ -26,35 +26,34 @@ const Server = function Server(db, rest) {
   app.use(bodyParser.json());
 
   // Define the application routes
-  app.get(`/+${constants.REST_URL_PREFIX}/[^/]+/`, (req, res) => {
+  app.get(`/+${prefix}/[^/]+/`, (req, res) => {
     const resource = urlRegex.exec(req.url)[1];
     if (req.query.hasOwnProperty('watch')) {
       watcher[resource] = watcher[resource] || [];
       watcher[resource].push(res);
     } else {
-      console.log('req.query:', req.query);
       rest.list(resource, req.query, res);
     }
   });
 
-  app.get(`/+${constants.REST_URL_PREFIX}/*/:id`, (req, res) => {
+  app.get(`/+${prefix}/*/:id`, (req, res) => {
     const resource = urlRegex.exec(req.url)[1];
     rest.retrieve(resource, req.params.id, req.query, res);
   });
 
-  app.post(`/+${constants.REST_URL_PREFIX}/[^/]+/`, (req, res) => {
+  app.post(`/+${prefix}/[^/]+/`, (req, res) => {
     const resource = urlRegex.exec(req.url)[1];
     rest.create(resource, req.body, req.query, res);
     publish(resource);
   });
 
-  app.post(`/+${constants.REST_URL_PREFIX}/*/:id`, (req, res) => {
+  app.post(`/+${prefix}/*/:id`, (req, res) => {
     const resource = urlRegex.exec(req.url)[1];
     rest.update(resource, req.params.id, req.body, req.query, res);
     publish(resource);
   });
 
-  app.delete(`/+${constants.REST_URL_PREFIX}/*/:id`, (req, res) => {
+  app.delete(`/+${prefix}/*/:id`, (req, res) => {
     const resource = urlRegex.exec(req.url)[1];
     rest.del(resource, req.params.id, res);
     publish(resource);

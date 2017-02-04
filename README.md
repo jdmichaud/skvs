@@ -47,10 +47,17 @@ To launch on a specific host and port
 server listening on port 0.0.0.0:12000 using memory store
 ```
 
-To launch with the filesystem for storage
+To launch `skvs` with the filesystem for storage
 ```
 ~ skvs --host 0.0.0.0 --port 12345 --storage=/tmp/data
 server listening on port 0.0.0.0:12000 using filesystem store on /tmp/data
+```
+
+To launch `skvs` with a custom url prefix
+```
+~ skvs --prefix myapp
+server listening on port 127.0.0.1:12000 using memory store
+~ curl -sL -w'\n' localhost:12000/myapp/some-resource/
 ```
 
 # Development
