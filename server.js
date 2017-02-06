@@ -28,7 +28,7 @@ const Server = function Server(db, rest, prefix) {
   // Define the application routes
   app.get(`/+${prefix}/[^/]+/`, (req, res) => {
     const resource = urlRegex.exec(req.url)[1];
-    if (req.query.hasOwnProperty('watch')) {
+    if (lodash.has(req.query, 'watch')) {
       watcher[resource] = watcher[resource] || [];
       watcher[resource].push(res);
     } else {
@@ -75,7 +75,7 @@ const Server = function Server(db, rest, prefix) {
     listen: function listen(options) {
       app.listen(options.port, options.host, () => {
         let prompt = 'server listening on';
-        prompt += ` ${options.host}:${options.port}`;
+        prompt += ` http://${options.host}:${options.port}/${options.prefix}`;
         if (options.storage) {
           prompt += ` using filesystem store on ${options.storage}`;
         } else {
