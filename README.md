@@ -47,7 +47,7 @@ Once `skvs` is running:
 {"author":"Joe Haldeman","title":"The Forever Wa","id":4}
 ```
 
-## /Real-time/ update
+## *Real-time* update
 
 To be notified of changes on a resource, `GET` the resource with the `?watch` option this way:
 
