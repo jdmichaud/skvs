@@ -6,9 +6,28 @@ REST api to store schema-less JSON data.
 
 `skvs` can either store in volatile memory or on the filesystem for permanent storage.
 
+It also provides a 'real-time' update notification facility based on long-polling.
+
+# Install
+
+To install globally, using npm:
+```
+~ npm install -g skvs
+```
+
+To just give it a try:
+```
+~ git clone https://github.com/jdmichaud/skvs && cd skvs
+~ npm install
+~ ./skvs.js
+```
+
 ## Sample usage:
 
+Once `skvs` is running:
+
 ```
+~ # Create books
 ~ curl -sL -w'\n' -X POST -d '{ "author": "Arthur C. Clarke", "title": "Childhood\'s End" }' localhost:12000/api/book/ -H 'Content-type: application/json'
 {"author":"Michael Crichton","title":"The Andromeda Strain","id":1}
 ~ curl -sL -w'\n' -X POST -d '{ "author": "Michael Crichton", "title": "The Andromeda Strain" }' localhost:12000/api/book/ -H 'Content-type: application/json'
@@ -17,20 +36,31 @@ REST api to store schema-less JSON data.
 {"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3}
 ~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldemann", "title": "The Forever War" }' localhost:12000/api/book/ -H 'Content-type: application/json'
 {"author":"Joe Haldemann","title":"The Forever War","id":4}
+~ # Retrieve the list of books
 ~ curl -sL -w'\n' localhost:12000/api/book/ -H 'Content-type: application/json'
 [{"author":"Michael Crichton","title":"The Andromeda Strain","id":1},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3},{"author":"Joe Haldeman","title":"The Forever War","id":4}]
+~ # Not the correct author? change a particular field of an existing book
 ~ curl -sGL -w'\n' localhost:12000/api/book/ --data-urlencode "author=Arthur C. Clarke"
 [{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3}]
+~ # Typo in the author's name? replace an existing book
+~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever Wa" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
+{"author":"Joe Haldeman","title":"The Forever Wa","id":4}
+```
+
+## /Real-time/ update
+
+To be notified of changes on a resource, `GET` the resource with the `?watch` option this way:
+
+```
+~ curl -sL -w'\n' localhost:12000/api/book?watch -H 'Content-type: application/json'
+```
+
+This will block until a change is performed on that resource. In another terminal, perform a change to the request:
+```
 ~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
-{"author":"Joe Haldeman","title":"The Forever War","id":4}
 ```
 
-# Install
-
-To install globally, using npm:
-```
-npm install -g skvs
-```
+The first command will return with the updated value.
 
 # Usage
 
