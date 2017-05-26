@@ -39,12 +39,12 @@ Once `skvs` is running:
 ~ # Retrieve the list of books
 ~ curl -sL -w'\n' localhost:12000/api/book/ -H 'Content-type: application/json'
 [{"author":"Michael Crichton","title":"The Andromeda Strain","id":1},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3},{"author":"Joe Haldeman","title":"The Forever War","id":4}]
-~ # Not the correct author? change a particular field of an existing book
+~ # Retrieve list according to a criteria
 ~ curl -sGL -w'\n' localhost:12000/api/book/ --data-urlencode "author=Arthur C. Clarke"
 [{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3}]
 ~ # Typo in the author's name? replace an existing book
-~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever Wa" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
-{"author":"Joe Haldeman","title":"The Forever Wa","id":4}
+~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
+{"author":"Joe Haldeman","title":"The Forever War","id":4}
 ```
 
 ## *Real-time* update
