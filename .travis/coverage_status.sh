@@ -1,7 +1,9 @@
 #!/bin/sh
 
+printf "Starging coverage analysis"
 if [[ $(npm run coverage-check) ]]
 then
+  printf "coverage OK"
   curl -s \
     --request POST https://${GH_TOKEN}:x-oauth-basic@api.github.com/repos/jdmichaud/skvs/statuses/${TRAVIS_COMMIT} \
     --header "Content-Type: application/json" \
@@ -16,6 +18,7 @@ then
 }
 EOF > /dev/null 2>&1
 else
+  printf "coverage NOK"
   curl -s \
     --request POST https://${GH_TOKEN}:x-oauth-basic@api.github.com/repos/jdmichaud/skvs/statuses/${TRAVIS_COMMIT} \
     --header "Content-Type: application/json" \
