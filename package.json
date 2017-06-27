@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "./skvs.js",
-    "test": "jasmine tests/*"
+    "test": "jasmine tests/*",
+    "check-coverage": "node_modules/.bin/nyc --check-coverage --lines 100 --functions 100 --branches 100 node_modules/.bin/jasmine tests/*"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "jasmine": "^2.5.3",
+    "nyc": "^11.0.3",
     "tmp": "0.0.31"
   }
 }
