@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Starging coverage analysis"
 if [[ $(npm run coverage-check) ]]
