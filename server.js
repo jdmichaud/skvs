@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const lodash = require('lodash');
 const constants = require('./constants');
-
+const morgan = require('morgan');
 const Server = function Server(db, rest, prefix) {
   const watcher = {};
   const urlRegex = RegExp(`/+${prefix}/([^/?]+).*`);
@@ -23,6 +23,8 @@ const Server = function Server(db, rest, prefix) {
   // Create the Express application
   const app = express();
   app.disable('x-powered-by');
+  // For logging
+  app.use(morgan('combined'));
   app.use(bodyParser.json());
 
   // Define the application routes
