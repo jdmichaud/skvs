@@ -28,23 +28,23 @@ Once `skvs` is running:
 
 ```
 ~ # Create books
-~ curl -sL -w'\n' -X POST -d '{ "author": "Arthur C. Clarke", "title": "Childhood\'s End" }' localhost:12000/api/book/ -H 'Content-type: application/json'
-{"author":"Michael Crichton","title":"The Andromeda Strain","id":1}
-~ curl -sL -w'\n' -X POST -d '{ "author": "Michael Crichton", "title": "The Andromeda Strain" }' localhost:12000/api/book/ -H 'Content-type: application/json'
-{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2}
-~ curl -sL -w'\n' -X POST -d '{ "author": "Arthur C. Clarke", "title": "Rendez-Vous With Rama" }' localhost:12000/api/book/ -H 'Content-type: application/json'
-{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3}
-~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldemann", "title": "The Forever War" }' localhost:12000/api/book/ -H 'Content-type: application/json'
+$ curl -sL -w'\n' -X POST -d '{ "author": "Arthur C. Clarke", "title": "Childhoods End" }' localhost:12000/api/book/ -H 'Content-type: application/json'
+{"author":"Arthur C. Clarke","title":"Childhoods End","id":1}
+$ curl -sL -w'\n' -X POST -d '{ "author": "Michael Crichton", "title": "The Andromeda Strain" }' localhost:12000/api/book/ -H 'Content-type: application/json'
+{"author":"Michael Crichton","title":"The Andromeda Strain","id":2}
+$ curl -sL -w'\n' -X POST -d '{ "author": "Arthur C. Clarke", "title": "Rendez-Vous With Rama" }' localhost:12000/api/book/ -H 'Content-type: application/json'
+{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":3}
+$ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldemann", "title": "The Forever War" }' localhost:12000/api/book/ -H 'Content-type: application/json'
 {"author":"Joe Haldemann","title":"The Forever War","id":4}
-~ # Retrieve the list of books
-~ curl -sL -w'\n' localhost:12000/api/book/ -H 'Content-type: application/json'
-[{"author":"Michael Crichton","title":"The Andromeda Strain","id":1},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3},{"author":"Joe Haldeman","title":"The Forever War","id":4}]
-~ # Retrieve list according to a criteria
-~ curl -sGL -w'\n' localhost:12000/api/book/ --data-urlencode "author=Arthur C. Clarke"
-[{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":2},{"author":"Arthur C. Clarke","title":"The Fountain Of Paradise","id":3}]
-~ # Typo in the author's name? replace an existing book
-~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
-{"author":"Joe Haldeman","title":"The Forever War","id":4}
+$ # Retrieve the list of books
+$ curl -sL -w'\n' localhost:12000/api/book/ -H 'Content-type: application/json'
+[{"author":"Arthur C. Clarke","title":"Childhoods End","id":1},{"author":"Michael Crichton","title":"The Andromeda Strain","id":2},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":3},{"author":"Joe Haldemann","title":"The Forever War","id":4}]
+$ # Retrieve list according to a criteria
+$ curl -sGL -w'\n' localhost:12000/api/book/ --data-urlencode "author=Arthur C. Clarke"
+[{"author":"Arthur C. Clarke","title":"Childhoods End","id":1},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":3}]
+$ # Typo in the author's name? replace an existing book
+$ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever Wa" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
+{"author":"Joe Haldeman","title":"The Forever Wa","id":4}
 ```
 
 ## *Real-time* update
@@ -52,15 +52,18 @@ Once `skvs` is running:
 To be notified of changes on a resource, `GET` the resource with the `?watch` option this way:
 
 ```
-~ curl -sL -w'\n' localhost:12000/api/book?watch -H 'Content-type: application/json'
+$ curl -sL -w'\n' localhost:12000/api/book?watch -H 'Content-type: application/json'
 ```
 
 This will block until a change is performed on that resource. In another terminal, perform a change to the request:
 ```
-~ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
+$ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
 ```
 
-The first command will return with the updated value.
+The first command will return with the updated list:
+```
+[{"author":"Arthur C. Clarke","title":"Childhoods End","id":1},{"author":"Michael Crichton","title":"The Andromeda Strain","id":2},{"author":"Arthur C. Clarke","title":"Rendez-Vous With Rama","id":3},{"author":"Joe Haldeman","title":"The Forever War","id":4}]
+```
 
 # Usage
 

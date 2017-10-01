@@ -33,6 +33,7 @@ function Db() {
     },
     update: function (resource, id, data) {
       _db[resource] = _db[resource] || [];
+      id = parseInt(id, 10);
       let result = _db[resource].filter(instance => instance.id === id);
       if (result.length) {
         result = result[0];
