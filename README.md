@@ -12,14 +12,14 @@ It also provides a 'real-time' update notification facility based on long-pollin
 
 To install globally, using npm:
 ```
-~ npm install -g skvs
+npm install -g skvs
 ```
 
 To just give it a try:
 ```
-~ git clone https://github.com/jdmichaud/skvs && cd skvs
-~ npm install
-~ ./skvs.js
+git clone https://github.com/jdmichaud/skvs && cd skvs
+npm install
+./skvs.js
 ```
 
 ## Sample usage:
@@ -27,7 +27,7 @@ To just give it a try:
 Once `skvs` is running:
 
 ```
-~ # Create books
+$ # Create books
 $ curl -sL -w'\n' -X POST -d '{ "author": "Arthur C. Clarke", "title": "Childhoods End" }' localhost:12000/api/book/ -H 'Content-type: application/json'
 {"author":"Arthur C. Clarke","title":"Childhoods End","id":1}
 $ curl -sL -w'\n' -X POST -d '{ "author": "Michael Crichton", "title": "The Andromeda Strain" }' localhost:12000/api/book/ -H 'Content-type: application/json'
@@ -52,12 +52,12 @@ $ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever 
 To be notified of changes on a resource, `GET` the resource with the `?watch` option this way:
 
 ```
-$ curl -sL -w'\n' localhost:12000/api/book?watch -H 'Content-type: application/json'
+curl -sL -w'\n' localhost:12000/api/book?watch -H 'Content-type: application/json'
 ```
 
 This will block until a change is performed on that resource. In another terminal, perform a change to the request:
 ```
-$ curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
+curl -sL -w'\n' -X POST -d '{ "author": "Joe Haldeman", "title": "The Forever War" }' localhost:12000/api/book/4/ -H 'Content-type: application/json'
 ```
 
 The first command will return with the updated list:
@@ -69,28 +69,28 @@ The first command will return with the updated list:
 
 To launch with all the default value:
 ```
-~ skvs
+$ skvs
 server listening on port 127.0.0.1:12000 using memory store
 ```
 By default, `skvs` will only accept local connections and will use the memory as storage.
 
 To launch on a specific host and port
 ```
-~ skvs --host 0.0.0.0 --port 12345
+$ skvs --host 0.0.0.0 --port 12345
 server listening on port 0.0.0.0:12000 using memory store
 ```
 
 To launch `skvs` with the filesystem for storage
 ```
-~ skvs --host 0.0.0.0 --port 12345 --storage=/tmp/data
+$ skvs --host 0.0.0.0 --port 12345 --storage=/tmp/data
 server listening on port 0.0.0.0:12000 using filesystem store on /tmp/data
 ```
 
 To launch `skvs` with a custom url prefix
 ```
-~ skvs --prefix myapp
+$ skvs --prefix myapp
 server listening on port 127.0.0.1:12000 using memory store
-~ curl -sL -w'\n' localhost:12000/myapp/some-resource/
+$ curl -sL -w'\n' localhost:12000/myapp/some-resource/
 ```
 
 # Development
@@ -105,5 +105,5 @@ And submit a pull request.
 All development shall be covered by unit tests.
 To run the test:
 ```
-~ npm test
+npm test
 ```
