@@ -22,15 +22,15 @@
     "command-line-args": "^4.0.1",
     "command-line-usage": "^4.0.0",
     "express": "^4.14.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "morgan": "^1.9.0",
+    "tmp": "0.0.31"
   },
   "devDependencies": {
     "eslint": "^3.14.1",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "jasmine": "^2.5.3",
-    "morgan": "^1.9.0",
-    "nyc": "^11.0.3",
-    "tmp": "0.0.31"
+    "nyc": "^11.0.3"
   }
 }
